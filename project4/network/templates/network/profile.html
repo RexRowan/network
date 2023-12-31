@@ -10,16 +10,16 @@
             {% if user.is_authenticated %}
                 {% if user != user_profile %}
                     {% if isFollowing %}
-                        <form action="{% url 'unfollow' %}" method="post">
+                        <form action="{% url 'follow' %}" method="post">
                             {% csrf_token %}
-                            <input type="hidden" name="userfollow" value="{{ user_profile }}" />
-                            <input type="submit" value="Unfollow" class="btn btn-danger"/>
+                            <input type="hidden" name="userfollow" value="{{ user_profile.username }}">
+                            <button type="submit" class="btn btn-danger">Unfollow</button>
                         </form>
                     {% else %}
                         <form action="{% url 'follow' %}" method="post">
                             {% csrf_token %}
-                            <input type="hidden" name="userfollow" value="{{ user_profile }}" />
-                            <input type="submit" value="Follow" class="btn btn-success" />
+                            <input type="hidden" name="userfollow" value="{{ user_profile.username }}">
+                            <button type="submit" class="btn btn-primary">Follow</button>
                         </form>
                     {% endif %}
                 {% endif %}

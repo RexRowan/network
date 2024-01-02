@@ -33,3 +33,31 @@
     color: gray;
     font-size: 15px;
 }
+
+.like-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .heart-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+  .heart-icon path {
+    fill: none;
+    stroke: black;
+    stroke-width: 2;
+  }
+  
+  .like-button[data-liked="true"] .heart-icon path {
+    fill: red;
+    stroke: red;
+  }
+  
+  .like-button:hover .heart-icon {
+    transform: scale(1.1);
+  }

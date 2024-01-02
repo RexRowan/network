@@ -38,20 +38,22 @@
         }
 
         document.addEventListener('DOMContentLoaded', (event) => {
-            const likeButton = document.getElementById('like-button');
-            const likeCountSpan = likeButton.querySelector('.like-count');
+            const likeButtons = document.querySelectorAll('.like-button'); // Use class selector instead of ID
           
-            likeButton.addEventListener('click', function() {
-              const postId = this.getAttribute('data-post-id');
-              const isLiked = this.getAttribute('data-liked') === 'true';
-              const newLikeCount = parseInt(likeCountSpan.textContent, 10) + (isLiked ? -1 : 1);
-          
-              // Update the like count and toggle the data-liked attribute
-              likeCountSpan.textContent = newLikeCount;
-              this.setAttribute('data-liked', !isLiked);
-          
-              // Here you would also send a fetch request to your server to update the like status
-              // fetch(`/toggle_like/${postId}`, { ... });
+            likeButtons.forEach(likeButton => {
+                const likeCountSpan = likeButton.querySelector('.like-count');
+            
+                likeButton.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-post-id');
+                    const isLiked = this.getAttribute('data-liked') === 'true';
+                    const newLikeCount = parseInt(likeCountSpan.textContent, 10) + (isLiked ? -1 : 1);
+            
+                    // Update the like count and toggle the data-liked attribute
+                    likeCountSpan.textContent = newLikeCount;
+                    this.setAttribute('data-liked', String(!isLiked));
+            
+                    // Here you would also send a fetch request to your server to update the like status
+                    // fetch(`/toggle_like/${postId}`, { ... });
+                });
+                });
             });
-          });
-    

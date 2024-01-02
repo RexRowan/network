@@ -37,30 +37,21 @@
 
         }
 
-        function toggleLike(postId) {
-            const likeButton = document.getElementById(`like-btn-${postId}`);
-            const likeCountSpan = document.getElementById(`like-count-${postId}`);
-
-            if (!likeButton || !likeCountSpan) {
-                console.error('One or more elements do not exist.');
-                return;
-            }
-
-            fetch(`/toggle_like/${postId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken')
-                }
-            })
-            .then(response => response.json())
-            .then(result => {
-                // Update the like count and button text based on the new like status
-                likeCountSpan.textContent = result.new_like_count;
-                likeButton.textContent = result.liked ? 'Unlike' : 'Like';
-            })
-            .catch(error => {
-                console.error('Error:', error);
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const likeButton = document.getElementById('like-button');
+            const likeCountSpan = likeButton.querySelector('.like-count');
+          
+            likeButton.addEventListener('click', function() {
+              const postId = this.getAttribute('data-post-id');
+              const isLiked = this.getAttribute('data-liked') === 'true';
+              const newLikeCount = parseInt(likeCountSpan.textContent, 10) + (isLiked ? -1 : 1);
+          
+              // Update the like count and toggle the data-liked attribute
+              likeCountSpan.textContent = newLikeCount;
+              this.setAttribute('data-liked', !isLiked);
+          
+              // Here you would also send a fetch request to your server to update the like status
+              // fetch(`/toggle_like/${postId}`, { ... });
             });
-        }
+          });
     
